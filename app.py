@@ -25,7 +25,7 @@ def preview():
     global camera
     """Preview the camera image"""
     url = urlparse(request.url)
-    #camera.resolution = (1024, 768)
+    camera.resolution = (2592,1944)
 #    camera.start_preview()
     # Camera warm-up time
     sleep(2)
