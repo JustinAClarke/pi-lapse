@@ -87,7 +87,8 @@ def site_map():
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template('page_not_found.html'), 404
+    links = getRoutes(app)
+    return render_template('page_not_found.html',links=links,title="404 Not Found"), 404
 
 
 if __name__ == '__main__':
