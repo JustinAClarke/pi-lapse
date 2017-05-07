@@ -32,7 +32,7 @@ def home():
     links = getRoutes(app)
     #links = [{'url': "/preview/", 'title': "Preview"}
      #        ]
-    return render_template("home.html", title="Camera", links=links)
+    return render_template("home.html", title="Camera", links=links,cameraStatus=getCameraStatus())
 
 
 @app.route('/preview/')
@@ -52,6 +52,13 @@ def preview():
                            my_http_port=url.port,
                            links=links)
 
+def getCameraStatus():
+    global camera
+    if camera === false:
+        return false
+    else:
+        return true
+    
 def getRoutes(app):
     links = []
     for rule in app.url_map.iter_rules():
