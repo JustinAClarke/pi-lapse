@@ -43,9 +43,9 @@ def preview():
         global camera
         width = 2592
         height = 1944
-        if request.args['width'];
+        if request.args['width']:
             width=request.args['width']
-        if request.args['height'];
+        if request.args['height']:
             height=request.args['height']
         """Preview the camera image"""
         url = urlparse(request.url)
