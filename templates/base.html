@@ -28,7 +28,9 @@
         {% endif %}
     </div>
     <div class="col-md-8">
+        {{ links|pprint }}
         <ul>
+            
         {% for link in links %}
             <li><a href="{{ link.url }}">{{ link.title }}</a></li>
         {% endfor %}
