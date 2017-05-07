@@ -16,7 +16,7 @@ def cameraon():
     global camera
     camera = PiCamera()
     #return redirect(url_for('home'))
-    return request.referrer
+    return redirect(request.referrer)
 
 
 @app.route('/off/')
@@ -25,7 +25,7 @@ def cameraoff():
     camera.close()
     camera = False
     #return redirect(url_for('home'))
-    return request.referrer
+    return redirect(request.referrer)
 
 
 @app.route('/')
