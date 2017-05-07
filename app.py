@@ -36,14 +36,16 @@ def home():
 
 
 @app.route('/preview/')
-def preview():
+@app.route('/preview/size')
+def preview(size='2592,1944'):
     links = getRoutes(app)
     cameraStatus=getCameraStatus()
     if cameraStatus:
         global camera
         """Preview the camera image"""
         url = urlparse(request.url)
-        camera.resolution = (2592,1944)
+        camera.resolution = (size)
+        #camera.resolution = (2592,1944)
     #    camera.start_preview()
         # Camera warm-up time
         sleep(2)
@@ -82,6 +84,10 @@ def site_map():
     return render_template("map.html",
                            title="SiteMap",
                            links=links)
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
 
 
 if __name__ == '__main__':
