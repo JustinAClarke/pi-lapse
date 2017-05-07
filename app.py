@@ -22,7 +22,7 @@ def cameraon():
 
 @app.route('/off/')
 def cameraoff():
-    if getCameraStatus() == False:
+    if getCameraStatus():
         global camera
         camera.close()
         camera = False
