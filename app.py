@@ -9,7 +9,7 @@ import random
 import os
 
 app = Flask(__name__)
-camera = false
+camera = False
 
 @app.route('/on/')
 def cameraon():
@@ -22,7 +22,7 @@ def cameraon():
 def cameraoff():
     global camera
     camera.close()
-    camera = false
+    camera = False
     return redirect(url_for('home/'))
 
 
@@ -54,10 +54,10 @@ def preview():
 
 def getCameraStatus():
     global camera
-    if camera === false:
-        return false
+    if camera == False:
+        return False
     else:
-        return true
+        return True
     
 def getRoutes(app):
     links = []
