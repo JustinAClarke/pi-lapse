@@ -19,14 +19,14 @@
             <a class="navbar-brand" href="#">{{ title }}</a>
         </div>
         <ul class="nav navbar-nav">
-            {% for link in links %}
+            {% for link in links|reverse() %}
             <li><a href="{{ link[0] }}">{{ link[1] }}</a></li>
             {% endfor %}
             <li>
                 {% if cameraStatus %}
-                Camera On
+                <a href="#">Camera On</a>
                 {% else %}
-                Camera Off
+                <a href="#">Camera Off</a>
                 {% endif %}
             </li>
         </ul>
