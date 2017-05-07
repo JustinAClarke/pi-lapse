@@ -12,7 +12,16 @@
 
 </head>
 <body>
-
+{% if cameraStatus %}
+    {% set camStatus = 'Camera On' %}
+    {% set camOption = 'Power Off' %}
+    {% set pathOption = '/off/' %}
+{% else %}
+    {% set camStatus = 'Camera Off' %}
+    {% set camOption = 'Power On' %}
+    {% set pathOption = '/on/' %}
+{% endif %}
+    
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -26,11 +35,11 @@
             <li {% if id == active_page %} class="active"{% endif %}><a href="{{ href|e }}">{{ id |title()}}</a></li>
             {% endfor %}
             <li>
-                {% if cameraStatus %}
-                <a href="#">Camera On</a>
-                {% else %}
-                <a href="#">Camera Off</a>
-                {% endif %}
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ camStatus }}
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                            <li><a href="{{ pathOption|e }}">{{ camOption }}</a></li>
+                    </ul>
             </li>
         </ul>
     </div>
