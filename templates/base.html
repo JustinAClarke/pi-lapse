@@ -1,20 +1,16 @@
 <!doctype html>
-<!-- HTML5 Boilerplate -->
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
-
+<html lang="en">
 <head>
-<meta charset="utf-8">
-
-<title>{{ title }}</title>
-
-{% block head %}{% endblock %}
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <title>{{ title }}</title>  
+    {% block head %}{% endblock %}
 
 </head>
-
 <body class="clearfix">
 
 <header role="banner" class="clearfix">
@@ -31,8 +27,8 @@
         {{ links|pprint }}
         <ul>
             
-        {% for link in links %}
-            <li><a href="{{ link[1] }}">{{ link[0] }}</a></li>
+        {#% for link in links %#}
+            <li><a href="{{ link[0] }}">{{ link[1] }}</a></li>
         {% endfor %}
         </ul>
     </div>
@@ -40,7 +36,8 @@
 
 <div class="content clearfix">
 {% block content %}{% endblock %}
-</div><!-- / content -->
+</div>
+    
 
 </body>
 </html>

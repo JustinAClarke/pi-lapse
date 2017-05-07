@@ -50,8 +50,6 @@ def preview():
         camera.capture('/home/pi/pi-camera/static/preview.jpg')
     return render_template("preview.html",
                            title="Preview",
-                           my_hostname=url.hostname,
-                           my_http_port=url.port,
                            links=links,
                            cameraStatus=cameraStatus)
 
