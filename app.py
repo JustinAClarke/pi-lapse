@@ -38,19 +38,22 @@ def home():
 @app.route('/preview/')
 def preview():
     links = getRoutes(app)
-    global camera
-    """Preview the camera image"""
-    url = urlparse(request.url)
-    camera.resolution = (2592,1944)
-#    camera.start_preview()
-    # Camera warm-up time
-    sleep(2)
-    camera.capture('/home/pi/pi-camera/static/preview.jpg')
+    cameraStatus=getCameraStatus()
+    if cameraStatus:
+        global camera
+        """Preview the camera image"""
+        url = urlparse(request.url)
+        camera.resolution = (2592,1944)
+    #    camera.start_preview()
+        # Camera warm-up time
+        sleep(2)
+        camera.capture('/home/pi/pi-camera/static/preview.jpg')
     return render_template("preview.html",
                            title="Preview",
                            my_hostname=url.hostname,
                            my_http_port=url.port,
-                           links=links)
+                           links=links,
+                           cameraStatus=cameraStatus)
 
 def getCameraStatus():
     global camera
