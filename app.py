@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for,redirect
 from time import sleep
 from picamera import PiCamera
 
@@ -9,19 +9,35 @@ import random
 import os
 
 app = Flask(__name__)
-camera = PiCamera()
+camera = false
+
+@app.route('/on/')
+def cameraon():
+    global camera
+    camera = PiCamera()
+    return redirect(url_for('home/'))
+
+
+@app.route('/off/')
+def cameraoff():
+    global camera
+    camera.close()
+    camera = false
+    return redirect(url_for('home/'))
 
 
 @app.route('/')
 def home():
     """Camera home page."""
-    links = [{'url': "/preview/", 'title': "Preview"}
-             ]
+    links = getRoutes(app)
+    #links = [{'url': "/preview/", 'title': "Preview"}
+     #        ]
     return render_template("home.html", title="Camera", links=links)
 
 
 @app.route('/preview/')
 def preview():
+    links = getRoutes(app)
     global camera
     """Preview the camera image"""
     url = urlparse(request.url)
@@ -33,8 +49,31 @@ def preview():
     return render_template("preview.html",
                            title="Preview",
                            my_hostname=url.hostname,
-                           my_http_port=url.port)
+                           my_http_port=url.port,
+                           links=links)
 
+def getRoutes(app):
+    links = []
+    for rule in app.url_map.iter_rules():
+        # Filter out rules we can't navigate to in a browser
+        # and rules that require parameters
+        if "GET" in rule.methods and has_no_empty_params(rule):
+            url = url_for(rule.endpoint, **(rule.defaults or {}))
+            links.append((url, rule.endpoint))
+    return links
+
+def has_no_empty_params(rule):
+    defaults = rule.defaults if rule.defaults is not None else ()
+    arguments = rule.arguments if rule.arguments is not None else ()
+    return len(defaults) >= len(arguments)
+
+
+@app.route("/site-map")
+def site_map():
+    links = getRoutes(app)
+    return render_template("map.html",
+                           title="SiteMap",
+                           links=links)
 
 
 if __name__ == '__main__':
