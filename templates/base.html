@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
-    <title>{{ title }}</title>  
+    <title>{{ title|title() }}</title>  
     {% block head %}{% endblock %}
 
 </head>
@@ -16,11 +16,13 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">{{ title }}</a>
+            <a class="navbar-brand" href="#">{{ title|title() }}</a>
         </div>
         <ul class="nav navbar-nav">
-            {% for link in links|reverse() %}
-            <li><a href="{{ link[0] }}">{{ link[1] }}</a></li>
+            {% set active_page = active_page|default('index') -%}
+            {% for href,id, link in links|reverse() %}
+            
+            <li {% if id == active_page %} class="active"{% endif %}><a href="{{ href|e }}">{{ id |title()}}</a></li>
             {% endfor %}
             <li>
                 {% if cameraStatus %}
