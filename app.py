@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from flask import Flask, render_template, request, url_for,redirect
+from flask import Flask, render_template, request, url_for,redirect,request
 from time import sleep
 from picamera import PiCamera
 
@@ -36,15 +36,20 @@ def home():
 
 
 @app.route('/preview/')
-@app.route('/preview/size')
-def preview(size='2592,1944'):
+def preview():
     links = getRoutes(app)
     cameraStatus=getCameraStatus()
     if cameraStatus:
         global camera
+        width = 2592
+        height = 1944
+        if request.args['width'];
+            width=request.args['width']
+        if request.args['height'];
+            height=request.args['height']
         """Preview the camera image"""
         url = urlparse(request.url)
-        camera.resolution = (size)
+        camera.resolution = (width,height)
         #camera.resolution = (2592,1944)
     #    camera.start_preview()
         # Camera warm-up time
