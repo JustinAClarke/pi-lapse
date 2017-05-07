@@ -35,21 +35,18 @@ def home():
     return render_template("home.html", title="Camera", links=links,cameraStatus=getCameraStatus())
 
 
-@app.route('/preview/')
+@app.route('/preview')
 def preview():
     links = getRoutes(app)
     cameraStatus=getCameraStatus()
     if cameraStatus:
         global camera
-        width = 2592
-        height = 1944
-        if request.args['width']:
-            width=request.args['width']
-        if request.args['height']:
-            height=request.args['height']
+        width = request.args.get('width', default=2592, type=int)
+        height = request.args.get('height', default=1944, type=int)
+        
         """Preview the camera image"""
-        url = urlparse(request.url)
-        camera.resolution = (width,height)
+        #url = urlparse(request.url)
+        camera.resolution = (int(width),int(height))
         #camera.resolution = (2592,1944)
     #    camera.start_preview()
         # Camera warm-up time
