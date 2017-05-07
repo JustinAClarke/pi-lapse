@@ -39,11 +39,12 @@ def home():
 def preview():
     links = getRoutes(app)
     cameraStatus=getCameraStatus()
+    template='noPreview.html'
     if cameraStatus:
         global camera
         width = request.args.get('width', default=2592, type=int)
         height = request.args.get('height', default=1944, type=int)
-        
+        template='preview.html'
         """Preview the camera image"""
         #url = urlparse(request.url)
         camera.resolution = (int(width),int(height))
@@ -52,7 +53,7 @@ def preview():
         # Camera warm-up time
         sleep(2)
         camera.capture('/home/pi/pi-camera/static/preview.jpg')
-    return render_template("preview.html",
+    return render_template(template,
                            title="Preview",
                            links=links,
                            cameraStatus=cameraStatus)
