@@ -13,7 +13,7 @@ camera = False
 
 @app.route('/on/')
 def cameraon():
-    if getCameraStatus():
+    if getCameraStatus() == False:
         global camera
         camera = PiCamera()
         #return redirect(url_for('home'))
