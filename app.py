@@ -13,18 +13,20 @@ camera = False
 
 @app.route('/on/')
 def cameraon():
-    global camera
-    camera = PiCamera()
-    #return redirect(url_for('home'))
+    if getCameraStatus():
+        global camera
+        camera = PiCamera()
+        #return redirect(url_for('home'))
     return redirect(request.referrer)
 
 
 @app.route('/off/')
 def cameraoff():
-    global camera
-    camera.close()
-    camera = False
-    #return redirect(url_for('home'))
+    if getCameraStatus() == False:
+        global camera
+        camera.close()
+        camera = False
+        #return redirect(url_for('home'))
     return redirect(request.referrer)
 
 
@@ -32,8 +34,6 @@ def cameraoff():
 def home():
     """Camera home page."""
     links = getRoutes(app)
-    #links = [{'url': "/preview/", 'title': "Preview"}
-     #        ]
     return render_template("home.html", title="Camera", links=links,cameraStatus=getCameraStatus())
 
 
