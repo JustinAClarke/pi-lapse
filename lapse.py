@@ -3,11 +3,14 @@
 import time
 from picamera import PiCamera
 
+import configparser
 import random
 import os,sys
 
 class piCameraLapse:
     def __init__(self):
+        self.config = configparser.ConfigParser(allow_no_value=True)
+        self.config.read('config.ini')
         self.camera = False
         self.width = 1280
         self.height = 720
@@ -20,6 +23,27 @@ class piCameraLapse:
         self.endMinute = 60
         
         self.debug = True
+        self.getConfig()
+
+    def getConfig(self):
+        self.width = self.config['Camera'].getint('width',1280)
+        self.height = self.config['Camera'].getint('height',720)
+
+        self.startHour = self.config['Times'].getint('SHour',0)
+        self.endHour = self.config['Times'].getint('EHour',0)
+
+        self.startMinute = self.config['Times'].getint('SMinute',0)
+        self.endMinute = self.config['Times'].getint('EMinute',0)
+
+        self.delay = self.config['Times'].getint('Delay',0)
+
+        self.location = self.config['General'].get('Location',0)
+        pass
+
+    def setConfig(self):
+        with open('config.ini', 'w') as configfile:
+           self.config.write(configfile)
+        pass
 
     def printDebug(self,line):
         if(self.debug):
@@ -81,13 +105,13 @@ class piCameraLapse:
         else:
             return False
         
-    def setConfig(self,config):
-        self.delay = config.delay
-        self.width = config.width
-        self.height = config.height
+#    def setConfig(self,config):
+#        self.delay = config.delay
+#        self.width = config.width
+#        self.height = config.height
         
         
-        pass
+#        pass
     
     def loop(self):
         self.printDebug("Loop")
@@ -102,5 +126,6 @@ class piCameraLapse:
         
 if __name__ == '__main__':
     app = piCameraLapse()
+    app.setConfig()
     app.loop()
     pass
