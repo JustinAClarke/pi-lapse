@@ -11,12 +11,14 @@ class piCameraLapse:
         self.camera = False
         self.width = 1280
         self.height = 720
-        self.location = "/tmp/images"
-        self.delay = 8 #in seconds
+        self.location = "./images/"
+
+        self.delay = 58 #in seconds
+
         #time set in UTC
-        self.startHour = 10
+        self.startHour = 0
         self.startMinute = 0
-        self.endHour = 11
+        self.endHour = 3
         self.endMinute = 60
         
         self.debug = True
@@ -28,14 +30,14 @@ class piCameraLapse:
     def cameraon(self):
         if self.getCameraStatus() == False:
             self.printDebug("Camera On")
-            #self.camera = PiCamera()
-            #self.camera.led = False
-            self.camera = "On"
+            self.camera = PiCamera()
+            self.camera.led = False
+#            self.camera = "On"
 
     def cameraoff(self):
         if self.getCameraStatus():
             self.printDebug("Camera Off")
-            #self.camera.close()
+            self.camera.close()
             self.camera = False
 
     def getCameraStatus(self):
@@ -49,11 +51,11 @@ class piCameraLapse:
             if not os.path.exists(self.location):
                 os.makedirs(self.location, mode=0o777)
             self.printDebug("Capture")
-            #self.camera.resolution(self.width,self.height)
+            self.camera.resolution = (self.width,self.height)
             time.sleep(2)
             file= "{}{}.jpg".format(self.location,time.strftime("%Y-%m-%d %H:%M:%S",time.gmtime()))
             self.printDebug("saveLoc {}".format(file))
-            #camera.capture(file)
+            self.camera.capture(file)
             
     def isTime(self):
         self.printDebug("istime")
@@ -104,3 +106,4 @@ if __name__ == '__main__':
     app = piCameraLapse()
     app.loop()
     pass
+
