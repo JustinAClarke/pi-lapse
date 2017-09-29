@@ -9,19 +9,24 @@ import os,sys
 class piCameraLapse:
     def __init__(self):
         self.camera = False
-        self.width = 1280
-        self.height = 720
-        self.location = "./images/"
+        self.width = 1920
+        self.height = 1080
+        self.location = "/home/pi/pi-camera/images/"
 
-        self.delay = 58 #in seconds
+        self.delay = 60 #in seconds
 
         #time set in UTC
-        self.startHour = 0
+        self.startHour = 8
         self.startMinute = 0
-        self.endHour = 3
+        self.endHour = 17
         self.endMinute = 60
         
         self.debug = True
+
+    def setNewPath(self,path=None):
+        if not path:
+            currTime=time.strftime("%Y-%m-%d %H:%M:%S",time.gmtime())
+            self.location="{}/{}/".format(self.location,currTime)
 
     def printDebug(self,line):
         if(self.debug):
@@ -94,16 +99,20 @@ class piCameraLapse:
     def loop(self):
         self.printDebug("Loop")
         while True:
+            self.printDebug("Sleep {} Seconds".format(self.delay))
+            time.sleep(self.delay)
             if(self.isTime()):
                 self.printDebug("Loop Capture")
-                self.printDebug("Sleep {} Seconds".format(self.delay))
-                time.sleep(self.delay)
                 self.cameraon()
                 self.capture()
                 self.cameraoff()
+            else:
+                self.printDebug("Sleep {} Seconds - No Capture".format(2))
+                time.sleep(2)
+
         
 if __name__ == '__main__':
     app = piCameraLapse()
+    app.setNewPath()
     app.loop()
     pass
-
