@@ -6,8 +6,13 @@ from picamera import PiCamera
 import random
 import os,sys
 
+import configparser
+
 class piCameraLapse:
     def __init__(self):
+        config = configparser.ConfigParser()
+        config.read('pi-camera.ini')
+        
         self.camera = False
         self.width = 1920
         self.height = 1080
@@ -15,17 +20,14 @@ class piCameraLapse:
 
         self.delay = 60 #in seconds
 
-        #time set in UTC
-        self.startHour = 8
-        self.startMinute = 0
-        self.endHour = 17
-        self.endMinute = 60
+        self.imageCount = 0
         
         self.debug = True
 
     def setNewPath(self,path=None):
         if not path:
             currTime=time.strftime("%Y-%m-%d %H:%M:%S",time.gmtime())
+            #auto inc Dir?
             self.location="{}/{}/".format(self.location,currTime)
 
     def printDebug(self,line):
@@ -58,7 +60,9 @@ class piCameraLapse:
             self.printDebug("Capture")
             self.camera.resolution = (self.width,self.height)
             time.sleep(2)
-            file= "{}{}.jpg".format(self.location,time.strftime("%Y-%m-%d %H:%M:%S",time.gmtime()))
+            #file= "{}{}.jpg".format(self.location,time.strftime("%Y-%m-%d %H:%M:%S",time.gmtime()))
+            file= "{}{}.jpg".format(self.location,self.imageCount)
+            self.imageCount ++
             self.printDebug("saveLoc {}".format(file))
             self.camera.capture(file)
             
