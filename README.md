@@ -7,18 +7,24 @@ To manage a Raspberry Pi for timelapse purposes
 
 ### Installing
 Clone the repo with the below
-`git clone https://github.com/JustinFuhrmeister-Clarke/pi-lapse.git`
+`git clone https://github.com/JustinAClarke/pi-lapse.git`
 
 ---
 
 ### Usage
-TBD
+```
+python3 ./lapse.py
+```
+If you need a web preview of the latest image run:
+```
+python3 -m http.server
+```
 
 ---
 
 ### Issues
 Please Submit all issues to 
-[github.com](https://github.com/JustinFuhrmeister-Clarke/pi-lapse.git)
+[github.com](https://github.com/JustinAClarke/pi-lapse.git)
 
 ---
 
